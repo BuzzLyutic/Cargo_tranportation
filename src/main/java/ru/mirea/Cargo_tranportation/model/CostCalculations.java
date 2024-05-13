@@ -1,8 +1,12 @@
 package ru.mirea.Cargo_tranportation.model;
 
 
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "cost_calculations")
 public class CostCalculations {
     @Id
@@ -13,5 +17,4 @@ public class CostCalculations {
     private Double additionalFees;
     private Double totalCost;
 
-    // Constructors, getters, and setters
 }

@@ -21,5 +21,4 @@ public class Order {
     private Timestamp createdTimestamp;
     private Timestamp updatedTimestamp;
 
-    // Constructors, getters, and setters
 }

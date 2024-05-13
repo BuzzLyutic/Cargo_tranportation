@@ -16,5 +16,4 @@ public class CargoDetails {
     private Double weight;
     private String dimensions;
 
-    // Constructors, getters, and setters
 }

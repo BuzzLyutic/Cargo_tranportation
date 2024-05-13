@@ -2,6 +2,7 @@ package ru.mirea.Cargo_tranportation.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.security.Timestamp;
 
 @Entity
 @Setter
@@ -10,11 +11,30 @@ import lombok.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     // Constructors, getters, and setters
+    public User() {}
+
+    public User(String username, String password, String email, Role role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
 }
