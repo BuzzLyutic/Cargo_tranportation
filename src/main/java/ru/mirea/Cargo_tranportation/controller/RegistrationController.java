@@ -17,8 +17,11 @@ public class RegistrationController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {

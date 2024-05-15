@@ -3,6 +3,7 @@ package ru.mirea.Cargo_tranportation.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.mirea.Cargo_tranportation.DTO.UserDTO;
 import ru.mirea.Cargo_tranportation.model.User;
@@ -11,18 +12,21 @@ import ru.mirea.Cargo_tranportation.repository.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     public void registerUser(UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
-        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        user.setRole(userDTO.getRole());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
+        user.setRole(userDTO.getRole());
         userRepository.save(user);
     }
 
@@ -31,7 +35,7 @@ public class UserService {
     }
 
     public boolean checkPassword(User user, String password) {
-        return bCryptPasswordEncoder.matches(password, user.getPassword());
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
 }

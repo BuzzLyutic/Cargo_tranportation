@@ -23,14 +23,14 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Enumerated(EnumType.STRING)
+   // @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Role role;
+    private String role;
 
     // Constructors, getters, and setters
     public User() {}
 
-    public User(String username, String password, String email, Role role) {
+    public User(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
