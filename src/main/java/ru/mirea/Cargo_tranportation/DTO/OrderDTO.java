@@ -13,5 +13,9 @@ public class OrderDTO {
     private String deliveryCity;
     private String status;
 
-    // Constructors, getters, and setters
+    public OrderDTO() {} // Default constructor
+
+    public OrderDTO(Long userId) { // Constructor accepting userId
+        this.userId = userId;
+    }
 }

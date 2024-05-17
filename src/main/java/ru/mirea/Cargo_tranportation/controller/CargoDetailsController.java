@@ -9,9 +9,10 @@ import ru.mirea.Cargo_tranportation.service.CargoDetailsService;
 
 import java.util.List;
 
-@RestController
+/*@RestController
 @RequestMapping("/api/cargo-details")
 public class CargoDetailsController {
+
     @Autowired
     private CargoDetailsService cargoDetailsService;
 
@@ -26,4 +27,4 @@ public class CargoDetailsController {
         List<CargoDetails> cargoDetails = cargoDetailsService.getCargoDetailsByOrder(orderId);
         return ResponseEntity.ok(cargoDetails);
     }
-}
+}*/

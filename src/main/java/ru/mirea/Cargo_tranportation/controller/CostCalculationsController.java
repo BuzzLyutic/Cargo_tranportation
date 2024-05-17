@@ -9,7 +9,7 @@ import ru.mirea.Cargo_tranportation.service.CostCalculationsService;
 
 import java.util.List;
 
-@RestController
+/*@RestController
 @RequestMapping("/api/cost-calculations")
 public class CostCalculationsController {
     @Autowired
@@ -27,3 +27,4 @@ public class CostCalculationsController {
         return ResponseEntity.ok(costCalculations);
     }
 }
+*/

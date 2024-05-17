@@ -9,7 +9,19 @@ import lombok.Setter;
 public class CargoDetailsDTO {
     private Long orderId;
     private Double weight;
-    private String dimensions;
+    private Double dimensions;
 
-    // Constructors, getters, and setters
+    public CargoDetailsDTO(Long orderId, Double weight, Double dimensions){
+        this.orderId = orderId;
+        this.weight = weight;
+        this.dimensions = dimensions;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public Double getDimensions() {
+        return dimensions;
+    }
 }

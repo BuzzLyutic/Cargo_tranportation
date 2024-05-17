@@ -1,5 +1,6 @@
 package ru.mirea.Cargo_tranportation.Security;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +31,7 @@ import java.util.Collections;
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,15 +41,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/register", "/resources/**").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/resources/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
                         .successHandler((request, response, authentication) -> {
-                            // Redirect to dashboard on successful login
-                            response.sendRedirect("/dashboard");
+                            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                            Long userId = ((CustomUserDetails) userDetails).getId(); // Assuming CustomUserDetails has getUserId()
+
+                            HttpSession session = request.getSession();
+                            session.setAttribute("userId", userId); // Save userId in session
+
+                            response.sendRedirect("/createOrder"); // Redirect after successful login
                         })
                         .failureHandler((request, response, exception) -> {
                             // Redirect to login page on failure
@@ -58,11 +65,11 @@ public class SecurityConfig {
                         .permitAll()
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                );
-                /*.sessionManagement(session -> session
+                )
+                .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .invalidSessionUrl("/login?sessionExpired=true")
-        );*/
+        );
         return http.build();
     }
 

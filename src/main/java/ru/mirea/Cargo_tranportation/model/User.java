@@ -2,7 +2,6 @@ package ru.mirea.Cargo_tranportation.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.security.Timestamp;
 
 @Entity
 @Setter
@@ -23,14 +22,14 @@ public class User {
     @Column(name = "email")
     private String email;
 
-   // @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private String role;
+    private Role role;
 
     // Constructors, getters, and setters
     public User() {}
 
-    public User(String username, String password, String email, String role) {
+    public User(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;

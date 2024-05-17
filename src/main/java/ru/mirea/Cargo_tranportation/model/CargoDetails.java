@@ -4,6 +4,9 @@ package ru.mirea.Cargo_tranportation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
+
 @Entity
 @Setter
 @Getter
@@ -11,9 +14,23 @@ import lombok.*;
 public class CargoDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "detail_id")
     private Long detailId;
-    private Long orderId;
-    private Double weight;
-    private String dimensions;
 
+    @Column(name = "order_id")
+    private Long orderId;
+
+    @Column(name = "weight")
+    private Double weight;
+
+    @Column(name = "dimensions")
+    private Double dimensions;
+
+    //@OneToOne
+   // @JoinColumn(name = "order_id", referencedColumnName = "order_id")
+    //private Order order;
+    /*@Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;*/
 }
