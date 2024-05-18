@@ -6,6 +6,7 @@
   <style>
     .error { color: red; }
   </style>
+  <script defer src="/calculateCost.js"></script>
 </head>
 <body>
 <h2>Create New Order</h2>
@@ -25,9 +26,15 @@
     <label for="dimensions">Dimensions:</label>
     <input type="text" id="dimensions" name="dimensions" required><br>
   </div>
-
+  <button type="button" onclick="calculateTotalCost()">Calculate Cost</button>
   <input type="submit" value="Submit">
+  <div id="calculated-costs"></div>
 </form>
+
+
+<a href="#" th:href="@{/my-orders}">View My Orders</a>
+<a href="#" th:href="@{/orders}">Go to orders page</a>
+
 </body>
 </html>
 

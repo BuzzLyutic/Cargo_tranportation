@@ -12,5 +12,4 @@ public class CostCalculationsDTO {
     private Double additionalFees;
     private Double totalCost;
 
-    // Constructors, getters, and setters
 }

@@ -3,7 +3,6 @@ package ru.mirea.Cargo_tranportation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
 
 @Entity
 @Setter
@@ -29,15 +28,5 @@ public class Order {
 
     @Column(name = "status")
     private String status;
-
-    /*@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private CargoDetails cargoDetails;
-
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private CostCalculations costCalculations;*/
-    /*@Temporal(TemporalType.TIMESTAMP)
-    private Timestamp createdTimestamp;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp updatedTimestamp;*/
 
 }

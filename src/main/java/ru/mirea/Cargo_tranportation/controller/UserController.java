@@ -1,50 +1,66 @@
 package ru.mirea.Cargo_tranportation.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ru.mirea.Cargo_tranportation.DTO.UserDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import ru.mirea.Cargo_tranportation.model.Order;
 import ru.mirea.Cargo_tranportation.model.User;
+import ru.mirea.Cargo_tranportation.repository.OrderRepository;
 import ru.mirea.Cargo_tranportation.repository.UserRepository;
-import ru.mirea.Cargo_tranportation.service.UserService;
+import ru.mirea.Cargo_tranportation.service.OrderService;
+
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 
-/*@RestController
-@RequestMapping("/login")
+@Controller
 public class UserController {
-
+    @Autowired
+    private OrderRepository orderRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
-        if (userRepository.findByUsername(userDTO.getUsername())!= null) {
-            return ResponseEntity.badRequest().body("Error: Username is already taken!");
-        }
-        User user = new User();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+    private OrderService orderService;
+    @GetMapping("/orders")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ModelAndView getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("orders");
+        modelAndView.addObject("orders", orders);
+        modelAndView.addObject("statuses", Arrays.asList("Pending",
+                "In Transit", "Delivered", "Cancelled"));
+        return modelAndView;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
-        User user = userRepository.findByUsername(userDTO.getUsername());
-        if (user == null ||!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(401).body("Invalid username or password");
-        }
-        // Set a cookie for the session
-        return ResponseEntity.ok("Login successful!");
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public ModelAndView getUsers() {
+        List<User> users = userRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("users");
+        modelAndView.addObject("users", users);
+        return modelAndView;
     }
+
+    @PostMapping("orders/update-status")
+    public String updateOrderStatus(@RequestParam Long orderId, @RequestParam String status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(status);
+        orderRepository.save(order);
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/my-orders")
+    public String showMyOrders(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+        List<Order> orders = orderService.findOrdersWithDetailsByUserId(user.getUserId());
+        model.addAttribute("orders", orders);
+        return "myOrders";
+    }
+
 }
-
-*/

@@ -2,6 +2,7 @@ package ru.mirea.Cargo_tranportation.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import ru.mirea.Cargo_tranportation.DTO.CargoDetailsDTO;
 import ru.mirea.Cargo_tranportation.DTO.OrderDTO;
@@ -12,10 +13,7 @@ import ru.mirea.Cargo_tranportation.repository.CargoDetailsRepository;
 import ru.mirea.Cargo_tranportation.repository.CostCalculationsRepository;
 import ru.mirea.Cargo_tranportation.repository.OrderRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -26,7 +24,7 @@ public class OrderService {
     @Autowired
     private CostCalculationsRepository costCalculationRepository;
 
-    @Transactional/////////////////////////////
+    @Transactional
     public void createOrder(OrderDTO orderDTO, CargoDetailsDTO cargoDetailsDTO) {
         // Create and save Order
         Order order = new Order();
@@ -55,11 +53,13 @@ public class OrderService {
         costCalculation.setAdditionalFees(additionalFees);
         costCalculation.setTotalCost(totalCost);
         costCalculationRepository.save(costCalculation);
+
+
     }
 
     private double calculateBaseCost(CargoDetailsDTO cargoDetail) {
         double baseCost = 100; // Base cost per kg
-        return baseCost + Math.max(cargoDetail.getWeight(), cargoDetail.getDimensions() * 0.001); // Volume weight factor, adjust as needed;
+        return baseCost + Math.max(cargoDetail.getWeight(), cargoDetail.getDimensions() * 0.001);
     }
 
     private double getDistance(String dispatchCity, String deliveryCity) {
@@ -77,4 +77,14 @@ public class OrderService {
         // Implement additional fees calculation logic
         return distanceBetweenCities * 0.5; // Placeholder
     }
+
+    public List<Order> findOrdersWithDetailsByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    public void updateStatusOfAllOrders(String status) {
+        orderRepository.updateStatus(status);
+    }
+
 }

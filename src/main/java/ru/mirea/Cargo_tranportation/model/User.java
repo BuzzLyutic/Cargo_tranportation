@@ -26,7 +26,6 @@ public class User {
     @Column(name = "role")
     private Role role;
 
-    // Constructors, getters, and setters
     public User() {}
 
     public User(String username, String password, String email, Role role) {

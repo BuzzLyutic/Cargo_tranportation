@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.mirea.Cargo_tranportation.Security.CustomUserDetails;
 import ru.mirea.Cargo_tranportation.model.User;
 import ru.mirea.Cargo_tranportation.repository.UserRepository;
 

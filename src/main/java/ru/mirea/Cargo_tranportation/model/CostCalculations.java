@@ -4,8 +4,6 @@ package ru.mirea.Cargo_tranportation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
-
 @Entity
 @Getter
 @Setter
@@ -28,11 +26,4 @@ public class CostCalculations {
     @Column(name = "total_cost")
     private Double totalCost;
 
-    //@OneToOne
-    //@JoinColumn(name = "order_id", referencedColumnName = "order_id")
-    //private Order order;
-    /*@Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;*/
 }
