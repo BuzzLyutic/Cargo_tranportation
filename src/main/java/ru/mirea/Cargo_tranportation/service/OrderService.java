@@ -26,7 +26,7 @@ public class OrderService {
 
     @Transactional
     public void createOrder(OrderDTO orderDTO, CargoDetailsDTO cargoDetailsDTO) {
-        // Create and save Order
+
         Order order = new Order();
         order.setUserId(orderDTO.getUserId());
         order.setOrderNumber(UUID.randomUUID().toString());
@@ -35,14 +35,14 @@ public class OrderService {
         order.setStatus("Pending");
         Order savedOrder = orderRepository.save(order);
 
-        // Create and save CargoDetail
+
         CargoDetails cargoDetail = new CargoDetails();
         cargoDetail.setOrderId(savedOrder.getOrderId());
         cargoDetail.setWeight(cargoDetailsDTO.getWeight());
         cargoDetail.setDimensions(cargoDetailsDTO.getDimensions());
         cargoDetailRepository.save(cargoDetail);
 
-        // Calculate costs and save CostCalculation
+
         double baseCost = calculateBaseCost(cargoDetailsDTO);
         double additionalFees = calculateAdditionalFees(orderDTO);
         double totalCost = baseCost + additionalFees;
@@ -63,7 +63,6 @@ public class OrderService {
     }
 
     private double getDistance(String dispatchCity, String deliveryCity) {
-        // Simplified distance calculation for demonstration purposes
         Map<String, Double> distances = new HashMap<>();
         distances.put("CityA-CityB", 200.0);
         distances.put("CityA-CityC", 150.0);
@@ -73,9 +72,8 @@ public class OrderService {
     }
 
     private double calculateAdditionalFees(OrderDTO orderDTO) {
-        double distanceBetweenCities = getDistance(orderDTO.getDispatchCity(), orderDTO.getDeliveryCity()); // Assume this method exists and calculates distance
-        // Implement additional fees calculation logic
-        return distanceBetweenCities * 0.5; // Placeholder
+        double distanceBetweenCities = getDistance(orderDTO.getDispatchCity(), orderDTO.getDeliveryCity());
+        return distanceBetweenCities * 0.5;
     }
 
     public List<Order> findOrdersWithDetailsByUserId(Long userId) {

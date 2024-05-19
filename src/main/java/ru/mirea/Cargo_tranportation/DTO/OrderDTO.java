@@ -12,7 +12,9 @@ public class OrderDTO {
     private String dispatchCity;
     private String deliveryCity;
     private String status;
-    public OrderDTO() {} // Default constructor
+
+    public OrderDTO() {
+    } // Default constructor
 
     public OrderDTO(Long userId) { // Constructor accepting userId
         this.userId = userId;

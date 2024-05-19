@@ -11,7 +11,7 @@ public class CargoDetailsDTO {
     private Double weight;
     private Double dimensions;
 
-    public CargoDetailsDTO(Long orderId, Double weight, Double dimensions){
+    public CargoDetailsDTO(Long orderId, Double weight, Double dimensions) {
         this.orderId = orderId;
         this.weight = weight;
         this.dimensions = dimensions;

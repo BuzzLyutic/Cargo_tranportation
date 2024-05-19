@@ -25,6 +25,7 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private OrderService orderService;
+
     @GetMapping("/orders")
     @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ModelAndView getAllOrders() {

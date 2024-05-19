@@ -38,15 +38,14 @@ public class SecurityConfig {
                         .permitAll()
                         .successHandler((request, response, authentication) -> {
                             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                            Long userId = ((CustomUserDetails) userDetails).getId(); // Assuming CustomUserDetails has getUserId()
+                            Long userId = ((CustomUserDetails) userDetails).getId();
 
                             HttpSession session = request.getSession();
-                            session.setAttribute("userId", userId); // Save userId in session
+                            session.setAttribute("userId", userId);
 
-                            response.sendRedirect("/createOrder"); // Redirect after successful login
+                            response.sendRedirect("/createOrder");
                         })
                         .failureHandler((request, response, exception) -> {
-                            // Redirect to login page on failure
                             response.sendRedirect("/login?error=true");
                         })
                 )
@@ -56,9 +55,9 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                 )
                 .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/login?sessionExpired=true")
-        );
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .invalidSessionUrl("/login?sessionExpired=true")
+                );
         return http.build();
     }
 

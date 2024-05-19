@@ -1,7 +1,6 @@
 package ru.mirea.Cargo_tranportation.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mirea.Cargo_tranportation.DTO.CargoDetailsDTO;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +21,8 @@ public class OrderController {
     @GetMapping("/createOrder")
     public String showCreateOrderForm(Model model) {
         model.addAttribute("orderDTO", new OrderDTO());
-        model.addAttribute("cargoDetailsDTO", new CargoDetailsDTO(null, null, null)); // Initialize with nulls or default values
-        return "orderForm"; // Assuming this is the view name for your order form
+        model.addAttribute("cargoDetailsDTO", new CargoDetailsDTO(null, null, null));
+        return "orderForm";
     }
 
     @PostMapping("/createOrder")
@@ -47,7 +46,7 @@ public class OrderController {
     }
 
     @GetMapping("/orderSuccess")
-    public String successfulOrder(){
+    public String successfulOrder() {
         return "successPage";
     }
 

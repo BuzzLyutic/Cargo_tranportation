@@ -25,7 +25,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String showHelloPage() {
-        return "hello"; // This corresponds to hello.html
+        return "hello";
     }
 
     @GetMapping("/login")
